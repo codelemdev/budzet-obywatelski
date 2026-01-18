@@ -1,0 +1,62 @@
+services:
+  # Aplikacja (PHP 8.3 + Nginx)
+  app:
+    image: webdevops/php-nginx:8.3
+    container_name: bo_app
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/public
+      - PHP_DISPLAY_ERRORS=1
+      - PHP_DATE_TIMEZONE=Europe/Warsaw
+      # Zmienne środowiskowe aplikacji są wczytywane z pliku .env,
+      # ale te kluczowe dla połączenia dockera można też nadpisać tutaj.
+    volumes:
+      - ./:/app
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - bo-network
+  # Baza danych (MySQL 8.0)
+  mysql:
+    image: mysql:8.0
+    container_name: bo_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: budzet_obywatelski
+      MYSQL_USER: bo_user
+      MYSQL_PASSWORD: bo_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - bo-network
+  # Redis (Cache / Kolejki)
+  redis:
+    image: redis:alpine
+    container_name: bo_redis
+    restart: unless-stopped
+    networks:
+      - bo-network
+  # Node.js (Frontend Build / Vite)
+  node:
+    image: node:20-alpine
+    container_name: bo_node
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "5173:5173" # Vite Dev Server default port
+    command: sh -c "npm install && tail -f /dev/null"
+    networks:
+      - bo-network
+volumes:
+  db_data:
+networks:
+  bo-network:
+    driver: bridge

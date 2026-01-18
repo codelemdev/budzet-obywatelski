@@ -1,0 +1,73 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.bg-blue {
+    background-color: #3b82f6;
+    /* blue-500 */
+}
+
+.bg-blue-hover {
+    background-color: #2563eb;
+    /* blue-600 */
+}
+
+.border-blue {
+    border-color: #3b82f6;
+}
+
+.ring-blue {
+    --tw-ring-color: #3b82f6;
+}
+
+.shadow-outline-blue {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* pionowa linia po lewej stronie komentarzy */
+.komentarze-container::before {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: -40px;
+    content: "";
+    width: 3px;
+    height: 100%;
+    background: #E5E7EB;
+}
+
+/* pozioma linia po lewej stronie komentarza */
+.komentarz-container::before {
+    position: absolute;
+    display: block;
+    top: 57px;
+    content: "";
+    width: 23px;
+    height: 3px;
+    background: #E5E7EB;
+    left: -40px;
+}
+
+/* usuwa ostatnią pionową linię (skraca ją odpowiednio) */
+.komentarz-container:last-child::after {
+    position: absolute;
+    display: block;
+    top: 60px;
+    left: -40px;
+    content: "";
+    width: 3px;
+    height: calc(100% - 60px);
+    background: #F3F4F6;
+}
+
+/* pokazuje kropkę przy komentarzach admina zmieniających status pomysłu */
+/* pokazuje kropkę przy komentarzach admina zmieniających status pomysłu */
+/* .is-admin::before removed - replaced by dynamic div in blade template */
