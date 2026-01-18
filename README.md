@@ -6,19 +6,19 @@ Aplikacja "Budżet Obywatelski" to platforma internetowa umożliwiająca mieszka
 
 * Ekran główny:
 
-![](/home/lem/Projects/budzet-obywatelski/screenshots/ekran-glowny.png)
+![](/screenshots/ekran-glowny.png)
 
 * Rejestracja:
 
-![](/home/lem/Projects/budzet-obywatelski/screenshots/rejestracja.png)
+![](/screenshots/rejestracja.png)
 
 * Zmiana statusu (admin) / dodawanie komentarza:
 
-![](/home/lem/Projects/budzet-obywatelski/screenshots/zmiania-statusu.png)
+![](/screenshots/zmiania-statusu.png)
 
 * Wersja mobilna:
 
-![](/home/lem/Projects/budzet-obywatelski/screenshots/wersja-mobilna.png)
+![](/screenshots/wersja-mobilna.png)
 
 ---
 
