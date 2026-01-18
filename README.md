@@ -185,8 +185,6 @@ Użytkownik ze statusem Admin (weryfikacja przez `User::isAdmin()` - flaga w baz
     *   Obok każdego komentarza widzi opcję "Usuń" (np. do moderacji spamu).
 *   **Dostęp do Panelu**: W obecnej wersji funkcje administracyjne są wbudowane w widoki publiczne, dostępne warunkowo.
 
----
-
 ## Dodatkowo
 *   **Wyrażenia regularne**: Wykorzystywane w mechanizmach walidacji Laravel oraz routingu.
 *   **Paginacja**: Lista pomysłów jest stronicowana (po 10 na stronę), co optymalizuje działanie przy dużej ilości danych.
