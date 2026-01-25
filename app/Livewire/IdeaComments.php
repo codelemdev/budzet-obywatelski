@@ -54,6 +54,46 @@ class IdeaComments extends Component
         session()->flash('success_message', 'Komentarz został usunięty!');
     }
 
+    public function markAsSpam($commentId)
+    {
+        if (auth()->guest() || auth()->user()->role !== \App\Enums\Role::Moderator) {
+            abort(403);
+        }
+
+        $comment = Comment::findOrFail($commentId);
+
+        if ($comment->is_spam) {
+            $comment->is_spam = false;
+        } else {
+            $comment->is_spam = true;
+            $comment->is_violation = false;
+        }
+
+        $comment->save();
+
+        $this->dispatch('comment-was-marked-as-spam');
+    }
+
+    public function markAsViolation($commentId)
+    {
+        if (auth()->guest() || auth()->user()->role !== \App\Enums\Role::Moderator) {
+            abort(403);
+        }
+
+        $comment = Comment::findOrFail($commentId);
+
+        if ($comment->is_violation) {
+            $comment->is_violation = false;
+        } else {
+            $comment->is_violation = true;
+            $comment->is_spam = false;
+        }
+
+        $comment->save();
+
+        $this->dispatch('comment-was-marked-as-violation');
+    }
+
     public function render()
     {
         return view('livewire.idea-comments', [

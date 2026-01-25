@@ -8,6 +8,13 @@ module.exports = {
         './app/Models/*.php',
     ],
 
+    safelist: [
+        'bg-yellow-200',
+        'bg-red-200',
+        'bg-yellow-50',
+        'bg-red-50',
+    ],
+
     theme: {
         extend: {
             spacing: {

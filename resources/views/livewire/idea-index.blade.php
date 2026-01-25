@@ -1,6 +1,6 @@
 <div>
     <div
-        class="pomysl-container hover:shadow-card transition duration-150 ease-in bg-white rounded-xl flex cursor-pointer">
+        class="pomysl-container hover:shadow-card transition duration-150 ease-in rounded-xl flex cursor-pointer @if($idea->is_spam) bg-yellow-200 @elseif($idea->is_violation) bg-red-200 @else bg-white @endif">
         <div class="hidden md:block border-r border-gray-100 px-5 py-8">
             <div class="text-center">
                 <div class="font-semibold text-2xl @if ($hasVoted) text-red-700 @endif">{{ $votesCount }}</div>
@@ -62,17 +62,19 @@
                             </svg>
                             <ul x-cloak x-show.transition.origin.top.left="isOpen" @click.away="isOpen = false"
                                 @keydown.escape.window="isOpen = false"
-                                class="absolute w-36 text-left font-semibold bg-white shadow-dialog rounded-xl py-3 md:ml-8 top-8 md:top-6 right-0 md:left-0">
-                                <li><a href="#"
-                                        class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Oznacz
-                                        spam</a></li>
+                                class="absolute w-36 text-left font-semibold bg-white shadow-dialog rounded-xl py-3 md:ml-8 top-8 md:top-6 right-0 md:left-0 z-10">
+                                @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Moderator)
+                                    <li><a href="#" wire:click.prevent="markAsSpam"
+                                            class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Oznacz
+                                            spam</a></li>
+                                    <li><a href="#" wire:click.prevent="markAsViolation"
+                                            class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Zgłoś</a>
+                                    </li>
+                                @endif
+
                                 @if (auth()->check() && auth()->user()->isAdmin())
                                     <li><a href="#" wire:click.prevent="deleteIdea"
                                             class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Usuń</a>
-                                    </li>
-                                @else
-                                    <li><a href="#"
-                                            class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Zgłoś</a>
                                     </li>
                                 @endif
                             </ul>

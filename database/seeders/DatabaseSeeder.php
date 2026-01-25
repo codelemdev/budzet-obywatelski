@@ -33,21 +33,29 @@ class DatabaseSeeder extends Seeder
             'name' => 'Adam Adminowicz',
             'email' => 'admin@budzet-obywatelski.pl',
             'password' => bcrypt('password'),
-            'is_admin' => true,
+            'role' => \App\Enums\Role::Admin,
         ]);
 
-        // 2. Create Test User
+        // 2. Create Moderator
+        $moderator = User::factory()->create([
+            'name' => 'Ewa Moderska',
+            'email' => 'moderator@budzet-obywatelski.pl',
+            'password' => bcrypt('password'),
+            'role' => \App\Enums\Role::Moderator,
+        ]);
+
+        // 3. Create Test User
         $testUser = User::factory()->create([
             'name' => 'Jan Kowalski',
             'email' => 'jan.kowalski@test.pl',
             'password' => bcrypt('password'),
-            'is_admin' => false,
+            'role' => \App\Enums\Role::User,
         ]);
 
-        // 3. Create 100 Random Users (Total 102 users)
+        // 3. Create 100 Random Users (Total 103 users)
         $regularUsers = User::factory(100)->create();
 
-        // Prepare pool of eligible users for activities (exclude Admin and Test User)
+        // Prepare pool of eligible users for activities (exclude Admin, Moderator and Test User)
         $eligibleUsers = $regularUsers;
 
         // 4. Create Categories and Statuses

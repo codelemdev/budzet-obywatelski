@@ -1,7 +1,8 @@
 <div>
     <div class="pomysl-buttons container"></div>
 
-    <div class="pomysl-container bg-white rounded-xl flex mt-4">
+    <div
+        class="pomysl-container rounded-xl flex mt-4 @if($idea->is_spam) bg-yellow-200 @elseif($idea->is_violation) bg-red-200 @else bg-white @endif">
         <div class="flex flex-col md:flex-row flex-1 min-w-0 px-4 py-6">
             <div class="flex-none mx-2 md:mx-0">
                 <a href="#">
@@ -41,16 +42,18 @@
                             <ul x-cloak x-show.transition.origin.top.left="isOpen" @click.away="isOpen = false"
                                 @keydown.escape.window="isOpen = false"
                                 class="absolute w-36 text-left font-semibold bg-white shadow-dialog rounded-xl py-3 z-10 md:ml-8 top-8 md:top-6 right-0 md:left-0">
-                                <li><a href="#"
-                                        class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Oznacz
-                                        spam</a></li>
+                                @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Moderator)
+                                    <li><a href="#" wire:click.prevent="markAsSpam"
+                                            class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Oznacz
+                                            spam</a></li>
+                                    <li><a href="#" wire:click.prevent="markAsViolation"
+                                            class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Zgłoś</a>
+                                    </li>
+                                @endif
+
                                 @if (auth()->check() && auth()->user()->isAdmin())
                                     <li><a href="#" wire:click.prevent="deleteIdea"
                                             class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Usuń</a>
-                                    </li>
-                                @else
-                                    <li><a href="#"
-                                            class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Zgłoś</a>
                                     </li>
                                 @endif
                             </ul>

@@ -23,6 +23,12 @@ class Idea extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'is_spam' => 'boolean',
+        'is_violation' => 'boolean',
+        'spam_reports' => 'integer',
+    ];
+
     /**
      * Return the sluggable configuration array for this model.
      *

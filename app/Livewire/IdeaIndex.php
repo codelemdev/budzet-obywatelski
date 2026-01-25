@@ -52,6 +52,42 @@ class IdeaIndex extends Component
         }
     }
 
+    public function markAsSpam()
+    {
+        if (auth()->guest() || auth()->user()->role !== \App\Enums\Role::Moderator) {
+            abort(403);
+        }
+
+        if ($this->idea->is_spam) {
+            $this->idea->is_spam = false;
+        } else {
+            $this->idea->is_spam = true;
+            $this->idea->is_violation = false;
+        }
+
+        $this->idea->save();
+
+        $this->dispatch('idea-was-marked-as-spam');
+    }
+
+    public function markAsViolation()
+    {
+        if (auth()->guest() || auth()->user()->role !== \App\Enums\Role::Moderator) {
+            abort(403);
+        }
+
+        if ($this->idea->is_violation) {
+            $this->idea->is_violation = false;
+        } else {
+            $this->idea->is_violation = true;
+            $this->idea->is_spam = false;
+        }
+
+        $this->idea->save();
+
+        $this->dispatch('idea-was-marked-as-violation');
+    }
+
     public function render()
     {
         return view('livewire.idea-index');

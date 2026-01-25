@@ -16,6 +16,9 @@ class Comment extends Model
 
     protected $casts = [
         'is_status_update' => 'boolean',
+        'is_spam' => 'boolean',
+        'is_violation' => 'boolean',
+        'spam_reports' => 'integer',
     ];
 
     public function user(): BelongsTo
